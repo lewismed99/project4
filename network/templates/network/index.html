@@ -7,7 +7,7 @@
 <div class="new-post my-3 mx-5">
     <div class="row"> <h2>New Posts</h2>
     </div>
-    <form action="{%url 'newPost'%}" method="post">
+    <form action="{% url 'newPost' %}" method="post">
         {% csrf_token %}
 
         <textarea name="content" row="4" cols="100"></textarea>
@@ -19,4 +19,11 @@
 </div>
 {% endif %}
     
+<div class="all-posts">
+
+
+    {% for posts in allPosts %}
+    <h3>{{ posts.content }}</h3>
+    {% endfor %}
+</div>
 {% endblock %}

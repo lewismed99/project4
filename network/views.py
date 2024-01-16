@@ -8,19 +8,23 @@ from .models import User, Post
 
 
 def index(request):
-    return render(request, "network/index.html")
+    allPosts=Post.objects.all().order_by("id").reverse()
+    return render(request, "network/index.html",{
+
+        "allPosts":allPosts
+    })
 
 def newPost(request):
-    if request.method==="POST"
-def login_view(request):
-    if request.method == "POST":
+    if request.method=="POST":
+
         content=request.POST['content']
         user=User.objects.get(pk=request.user.id)
         post=Post(content=content, user=user)
         post.save()
-        return HttpResponseRedirect(reverse,index)
+        return HttpResponseRedirect(reverse(index))
 
-
+def login_view(request):
+    if request.method == "POST":
         # Attempt to sign user in
         username = request.POST["username"]
         password = request.POST["password"]
