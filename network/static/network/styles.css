@@ -1,8 +1,39 @@
 .new-post{
 display: flex;
-flex-direction: center;
-justify-content: center;
-align-items: center;
+flex-direction: column;
+justify-content: flex-start;
+align-items: flex-start;
 
+
+}
+
+
+.all-posts{
+display: flex;
+justify-content: flex-start;
+flex-direction: column;
+margin: 20px;
+}
+
+.posts{
+border:0.1px solid gray;
+display: flex;
+justify-content: center;
+flex-direction:column;
+max-width: 600px;
+box-sizing: border-box;
+}
+
+.content{
+font-size: 15px;
+
+}
+.username{
+    font-size: 22px;
+}
+
+.date{
+    color:gray;
+    font-size: 15px;
 
 }
