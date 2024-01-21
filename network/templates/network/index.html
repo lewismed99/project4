@@ -20,7 +20,7 @@
 {% endif %}
     
 <div class="all-posts" >
-    {% for post in allPosts %}
+    {% for post in posts_of_the_page %}
     <div class="post" style="margin: 5px 20px; border:0.1px solid gray; display: flex;
     justify-content: center;
     flex-direction:column;
@@ -33,4 +33,15 @@
     </div>
     {% endfor %}
 </div>
+
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+  </nav>
 {% endblock %}
