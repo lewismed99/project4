@@ -11,7 +11,7 @@ def index(request):
     allPosts=Post.objects.all().order_by("id").reverse()
 
     #pagination
-    paginator=Paginator(allPosts,10)
+    paginator=Paginator(allPosts,2)
     page_number= request.GET.get('page')
     posts_of_the_page=paginator.get_page(page_number)
     return render(request, "network/index.html",{
