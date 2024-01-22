@@ -28,8 +28,22 @@ def newPost(request):
         post=Post(content=content, user=user)
         post.save()
         return HttpResponseRedirect(reverse(index))
+def profile(request,user_id):
+     user=User.objects.get(pk=user_id)
+     allPosts=Post.objects.filter(user=user).order_by("id").reverse()
+     #pagniator
+     paginator=Paginator(allPosts,2)
+     page_number= request.GET.get('page')
+     posts_of_the_page=paginator.get_page(page_number)
+     return render(request, "network/profile.html",{
 
+        "allPosts":allPosts,
+        "posts_of_the_page":posts_of_the_page,
+        "username":user.username
+    })
+    
 def login_view(request):
+
     if request.method == "POST":
         # Attempt to sign user in
         username = request.POST["username"]
