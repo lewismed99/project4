@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.core.paginator import Paginator
-from .models import User, Post
+from .models import User, Post, Follow
 
 
 def index(request):
@@ -32,6 +32,8 @@ def profile(request,user_id):
      user=User.objects.get(pk=user_id)
      allPosts=Post.objects.filter(user=user).order_by("id").reverse()
      #pagniator
+     following= Follow.objects.filter(user=user)
+     followers=Follow.objects.filter(user_follower=user)
      paginator=Paginator(allPosts,2)
      page_number= request.GET.get('page')
      posts_of_the_page=paginator.get_page(page_number)
@@ -39,8 +41,11 @@ def profile(request,user_id):
 
         "allPosts":allPosts,
         "posts_of_the_page":posts_of_the_page,
-        "username":user.username
+        "username":user.username,
+        'following':following,
+        "followers":followers,
     })
+
     
 def login_view(request):
 
