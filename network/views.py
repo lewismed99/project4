@@ -34,6 +34,17 @@ def profile(request,user_id):
      #pagniator
      following= Follow.objects.filter(user=user)
      followers=Follow.objects.filter(user_follower=user)
+
+     try:
+         checkFollow=followers.filter(user=user.objects.get(pk=request.user.id))
+         if len(checkfollow) !=0:
+             isFollowing=True
+         else:
+             isFollowing =False
+     except:
+         isFollowing= False
+
+
      paginator=Paginator(allPosts,2)
      page_number= request.GET.get('page')
      posts_of_the_page=paginator.get_page(page_number)
@@ -44,6 +55,8 @@ def profile(request,user_id):
         "username":user.username,
         'following':following,
         "followers":followers,
+        "isFollowing":isFollowing,
+        "user_profile":user
     })
 
     
