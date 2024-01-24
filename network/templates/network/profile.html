@@ -10,7 +10,7 @@
     <h3 class="col-4"> following: {{following.count}}</h3>
 
     {% if is_authenticated %}
-    {% if user!= user_profile %}
+    {% if user != user_profile %}
     {% if isfollowing %}
     <form action=" {% url 'unfollow' %}" method="post">
         {% csrf_token %}
