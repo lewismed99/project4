@@ -60,8 +60,8 @@ def profile(request,user_id):
     })
 
 def follow(request):
-    if request.method=="POST":
-        return
+    userfollow=request.POST[userfollow]
+    currentuser=User.objects.get(pk=request.user.id)
 
 def unfollow(request):
 
