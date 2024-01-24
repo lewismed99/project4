@@ -59,7 +59,14 @@ def profile(request,user_id):
         "user_profile":user
     })
 
-    
+def follow(request):
+    if request.method=="POST":
+        return
+
+def unfollow(request):
+
+    return
+
 def login_view(request):
 
     if request.method == "POST":
