@@ -14,6 +14,7 @@
     {% if isfollowing %}
     <form action="" method="post">
         {% csrf_token %}
+        <input type="hidden" name="userfollow" value="{{user_profile}}">
         <input type="submit" value="unfollow">
     </form>
 
