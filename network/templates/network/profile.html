@@ -11,7 +11,14 @@
 
     {% if is_authenticated %}
     {% if user!= user_profile %}
+    {% if isfollowing %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="submit" value="unfollow">
+    </form>
 
+    {% else %}
+    {% endif %}
     {% endif %}
     {% endif %}
     </div>
