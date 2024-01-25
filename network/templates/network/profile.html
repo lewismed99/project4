@@ -9,20 +9,20 @@
     <h3 class="col-4"> followers: {{followers.count}}</h3>
     <h3 class="col-4"> following: {{following.count}}</h3>
 
-    {% if is_authenticated %}
+    {% if user.is_authenticated %}
     {% if user != user_profile %}
-    {% if isfollowing %}
+    {% if isFollowing %}
     <form action=" {% url 'unfollow' %}" method="post">
         {% csrf_token %}
-        <input type="hidden" name="userfollow" value="{{user_profile}}">
+        <input type="hidden" name="userfollow" value="{{ user_profile }}">
         <input type="submit" value="unfollow">
     </form>
 
     {% else %}
     <form action="{% url 'follow' %}" method="post">
         {% csrf_token %}
-        <input type="hidden" name="userfollow" value="{{user_profile}}">
-        <input type="submit" value="follow">
+        <input type="hidden" name="userfollow" value="{{user_profile }}">
+        <input type="submit" value="Follow">
     </form>
 
     {% endif %}

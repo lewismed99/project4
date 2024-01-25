@@ -36,8 +36,8 @@ def profile(request,user_id):
      followers=Follow.objects.filter(user_follower=user)
 
      try:
-         checkFollow=followers.filter(user=user.objects.get(pk=request.user.id))
-         if len(checkfollow) !=0:
+         checkFollow=followers.filter(user=User.objects.get(pk=request.user.id))
+         if len(checkFollow) !=0:
              isFollowing=True
          else:
              isFollowing =False
@@ -60,21 +60,21 @@ def profile(request,user_id):
     })
 
 def follow(request):
-    userfollow=request.POST[userfollow]
-    currentuser=User.objects.get(pk=request.user.id)
-    userfollowdata=User.objects.get(username=userfollow)
-    f=Follow(user=currentuser, user_follower=userfollowdata)
+    userfollow=request.POST['userfollow']
+    currentUser=User.objects.get(pk=request.user.id)
+    userfollowData=User.objects.get(username=userfollow)
+    f=Follow(user=currentUser, user_follower=userfollowData)
     f.save()
-    user_id=userfollowdata.id
+    user_id=userfollowData.id
     return HttpResponseRedirect(reverse(profile, kwargs={'user_id':user_id}))
 
 def unfollow(request):
-    userfollow=request.POST[userfollow]
-    currentuser=User.objects.get(pk=request.user.id)
-    userfollowdata=User.objects.get(username=userfollow)
-    f=Follow.objects.get(user=currentuser, user_follower=userfollowdata)
+    userfollow=request.POST['userfollow']
+    currentUser=User.objects.get(pk=request.user.id)
+    userfollowData=User.objects.get(username=userfollow)
+    f=Follow.objects.get(user=currentUser, user_follower=userfollowData)
     f.delete()
-    user_id=userfollowdata.id
+    user_id=userfollowData.id
     return HttpResponseRedirect(reverse(profile, kwargs={'user_id':user_id}))
 
 
