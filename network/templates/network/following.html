@@ -1,24 +1,9 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-<h1>All POSTS</h1>
-
-{%  if  user.is_authenticated %}
-<div class="new-post my-3 mx-5">
-    <div class="row"> <h2>New Posts</h2>
-    </div>
-    <form action="{% url 'newPost' %}" method="post">
-        
-        {% csrf_token %}
-
-        <textarea name="content" row="4" cols="100"></textarea>
-    </br>
-        <input type="submit" value="Post" class="btn btn-primary"/>
+<h1>Following</h1>
 
 
-    </form>
-</div>
-{% endif %}
     
 <div class="all-posts" >
     {% for post in posts_of_the_page %}
