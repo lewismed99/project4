@@ -11,12 +11,12 @@ class Post(models.Model):
     content=models.CharField(max_length=140)
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="author")
     date=models.DateTimeField(auto_now_add=True)
-
- 
+    
+    
     def __str__(self):
         return f"post {self.id} made by {self.user} on {self.date.strftime('%d %b %Y %H:%M:%S')}"
 
-class Follow(models.Model):
+class Follow(models.Model): 
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="user_who_is_following")
     user_follower=models.ForeignKey(User,on_delete=models.CASCADE,related_name="user_who_is_followed")
     def __str__(self):
