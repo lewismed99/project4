@@ -33,11 +33,18 @@
         <p class="date"> {{ post.date }}</p>
         {% if user.is_authenticated %}
         {% if user == post.user %}
+
+        <div class="d-flex justify-content-around">
+            <button class="btn btn-primary" > Edit </button>
+
+        </div>
      
-        <p>this is cool</p>
+       
         {% endif %}
         {% endif %}
          
+    
+
     </div>
     {% endfor %}
 </div>
