@@ -13,7 +13,7 @@ def edit(request, post_id):
         edit_post=Post.objects.get(pk=post_id)
         edit_post.content=data['content']
         edit_post.save()
-        return JsonResponse({'message': 'change successful', 'data':data['content']})
+        return JsonResponse({'message': 'change successful', 'data': data['content']})
 
 
 def index(request):
