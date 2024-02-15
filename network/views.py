@@ -4,9 +4,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.core.paginator import Paginator
-from .models import User, Post, Follow
-import json 
+import json
 from django.http import JsonResponse
+from .models import User, Post, Follow
+
 def edit(request, post_id):
     if request.method=="POST":
         data=json.loads(request.body)

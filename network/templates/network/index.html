@@ -10,6 +10,7 @@
     if(parts.length==2) return parts.pop().split(';').shift();
 }
 onclick*/
+/*
 function getCookie(name){
 const value=`;${document.cookie}`
 const parts=value.split(`; ${name}=`)
@@ -18,20 +19,49 @@ if(parts.length==2) return parts.pop().split(';').shift();
 
 
 
-function submitHandeler(id){
+function submitHandler(id){
   const textareaValue=document.getElementById(`textarea_${id}`).value
-  fetch(`/edit/${id}`,{
+  const content=document.getElementById(`content_${id}`)
+  const modal=document.getElementById(`modal_edit_post_${id}`)
+  fetch(`/edit/${id}`, {
     method:"POST",
     headers:{"content-type":"application/json","X-CSRFToken": getCookie("csrftoken")},//index 65
-    body:JSON.stringify({
+    body: JSON.stringify({
       content:textareaValue
     })
 
 
   })
-    .then(response=> response.json())
-    .then(result=>
-    console.log(result))
+
+  .then(response => response.json())
+            .then(result => {
+                content.innerHTML = result.data;
+            
+                modal.classList.remove('show');
+                modal.setAttribute('aria-hidden', 'true');
+                modal.setAttribute('style', 'display: none');
+
+                // get modal backdrops
+                const modalsBackdrops = document.getElementsByClassName('modal-backdrop');
+            
+                for(let i=0; i<modalsBackdrops.length; i++){
+                    document.body.removeChild(modalsBackdrops[i]);
+                }
+            })
+            
+        }
+*/
+
+   /* .then(response=> response.json())
+    .then(result=>{
+
+  content.innerHTML=result.data;
+
+
+}
+    //console.log(result)
+    )}
+    */
   /*
     const textAreaValue=document.getElementById(`textarea_${id}`).value
    fetch(`/edit/${id}`,{
@@ -47,7 +77,43 @@ function submitHandeler(id){
    )
 */
 
-}
+function getCookie(name){
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if(parts.length == 2) return parts.pop().split(';').shift();
+        }
+
+
+
+        function submitHandler(id){
+            const textareaValue = document.getElementById(`textarea_${id}`).value;
+            const content = document.getElementById(`content_${id}`);
+            const modal = document.getElementById(`modal_edit_post_${id}`);
+            fetch(`/edit/${id}`, {
+                method: "POST",
+                headers: {"Content-type": "application/json", "X-CSRFToken": getCookie("csrftoken")},
+                body: JSON.stringify({
+                    content: textareaValue
+                })
+            })
+            .then(response => response.json())
+            .then(result => {
+                content.innerHTML = result.data;
+            
+                modal.classList.remove('show');
+                modal.setAttribute('aria-hidden', 'true');
+                modal.setAttribute('style', 'display: none');
+
+                // get modal backdrops
+                const modalsBackdrops = document.getElementsByClassName('modal-backdrop');
+            
+                for(let i=0; i<modalsBackdrops.length; i++){
+                    document.body.removeChild(modalsBackdrops[i]);
+                }
+            })
+            
+        }
+
 
 
 </script>
@@ -78,7 +144,7 @@ function submitHandeler(id){
     box-sizing: border-box;"> 
         <h5 class="username">@{{ post.user }}</h5>
         
-       <h6 class="content" >{{ post.content }}</h6>
+       <h6 class="content" id="content_{{post.id}}" >{{ post.content }}</h6>
      
         <p class="date"> {{ post.date }}</p>
         {% if user.is_authenticated %}
@@ -103,7 +169,7 @@ function submitHandeler(id){
                   <textarea rows="5" id="textarea_{{ post.id }}" class="form-control" name="content">{{ post.content }}</textarea>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" onclick="submitHandeler({{ post.id }})">Save changes</button>
+                  <button type="button" class="btn btn-primary" onclick= "submitHandler({{ post.id }})">Save changes</button>
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
               </div>
