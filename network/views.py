@@ -8,6 +8,18 @@ import json
 from django.http import JsonResponse
 from .models import User, Post, Follow, Like
 
+def remove_like(request, post_id):
+    post=Post.objects.get(pk=post_id)
+    user=User.objects.get(pk=request.user.id)
+    like=Like.objects.filter(user=user, post=post)
+    like.delete()
+    return JsonResponse({"messasge": "like removed"})
+def add_like(request,post_id):
+    post=Post.objects.get(pk=post_id)
+    user=User.objects.get(pk=request.user.id)
+    newLike=Like(user=user, post=post)
+    newLike.save()
+    return JsonResponse({"messasge": "like added"})
 def edit(request, post_id):
     if request.method=="POST":
         data=json.loads(request.body)
@@ -26,14 +38,18 @@ def index(request):
     posts_of_the_page=paginator.get_page(page_number)
     allLikes=Like.objects.all().order_by('id').reverse()
     whoYouLiked=[]
-   # try:
-    #    for likes in allLikes:
-    #      if like.user.id==request.user.id
+    try:
+        for likes in allLikes:
+          if likes.user.id==request.user.id:
+              whoYouLiked.append(likes.post.id)
+    except:
+        whoYouLiked=[]
 
     return render(request, "network/index.html",{
 
         "allPosts":allPosts,
-        "posts_of_the_page":posts_of_the_page
+        "posts_of_the_page":posts_of_the_page,
+        'whoYouLiked':whoYouLiked
     })
 
 def newPost(request):
