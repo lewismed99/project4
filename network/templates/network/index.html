@@ -53,6 +53,9 @@ function getCookie(name){
         }
 
         function likeHandler(id,whoYouLiked ){
+          const btn= document.getElementById(`${id}`)
+          btn.classList.remove("fa-thumbs-up")
+          btn.classList.remove("fa-thumbs-down")
           if(whoYouLiked.indexOf(id)>=0){
 
             var liked=true
@@ -64,15 +67,16 @@ function getCookie(name){
             fetch(`/remove_like/${id}`)
             .then(response=> response.json)
             .then(result =>{
-              console.log(result.message)
+              btn.classList.add('fa-thumbs-up')
             })
           }else{
             fetch(`/add_like/${id}`)
             .then(response=> response.json)
             .then(result =>{
-              console.log(result.message)
+              btn.classList.add('fa-thumbs-down')
             })
           }
+          liked= !liked
         }
 
 /*
