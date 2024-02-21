@@ -1,3 +1,4 @@
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -21,3 +22,12 @@ class Follow(models.Model):
     user_follower=models.ForeignKey(User,on_delete=models.CASCADE,related_name="user_who_is_followed")
     def __str__(self):
         return f"{self.user} is following {self.user_follower}"
+    
+
+class Like(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE, related_name='user_like')
+    post=models.ForeignKey(User,on_delete=models.CASCADE, related_name='post_like')
+
+
+    def __str__(self):
+        return f"{self.user} liked {self.post}"
