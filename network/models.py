@@ -11,6 +11,7 @@ class User(AbstractUser):
 class Post(models.Model):
     content=models.CharField(max_length=140)
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="author")
+    imageUrl=models.CharField(max_length=1000,null=True)
     date=models.DateTimeField(auto_now_add=True) 
     
     
@@ -31,3 +32,4 @@ class Like(models.Model):
 
     def __str__(self):
         return f"{self.user} liked {self.post}"
+    

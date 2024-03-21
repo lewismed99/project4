@@ -29,6 +29,8 @@ def edit(request, post_id):
         return JsonResponse({'message': 'change successful', 'data': data['content']})
 
 
+def about(request):
+    return render(request,'network/about.html')
 def index(request):
     allPosts=Post.objects.all().order_by("id").reverse()
 
@@ -56,17 +58,24 @@ def newPost(request):
     if request.method=="POST":
 
         content=request.POST['content']
+        imageUrl=request.POST["imageurl"]
         user=User.objects.get(pk=request.user.id)
-        post=Post(content=content, user=user)
+        
+        post=Post(content=content, user=user, imageUrl=imageUrl)
+        
         post.save()
         return HttpResponseRedirect(reverse(index))
 def profile(request,user_id):
      user=User.objects.get(pk=user_id)
+     otherUser=User.objects.get(pk=request.user.id)
+    
+    
+    
      allPosts=Post.objects.filter(user=user).order_by("id").reverse()
      #pagniator
      following= Follow.objects.filter(user=user)
      followers=Follow.objects.filter(user_follower=user)
-
+     
      try:
          checkFollow=followers.filter(user=User.objects.get(pk=request.user.id))
          if len(checkFollow) !=0:

@@ -1,0 +1,31 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+<h1>Purpose</h1>
+
+
+<p>The Green Book, a website that champions and highlights minority businesses draws its name from the tenacity of New York City mailman Victor Hugo Green. From 1936 to 1967, Green published an annual guidebook for African-American Roadtrippers, a testament to the resilience of the African-American community during the era of Jim Crow laws. This was a time when open and often legally prescribed discrimination against African Americans and other non-whites was rampant. Green's guidebook was a beacon of hope, helping African Americans find lodgings, businesses, and gas stations that would serve them along the road. It was a treasure little known outside the African-American community. With the passage of the Civil Rights Act of 1964, which outlawed the types of racial discrimination that made the Green Book necessary, publication ceased, and it fell into obscurity. 
+</p>
+
+<h2>Victor Hugo Green.</h2>
+<img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Victor_Hugo_Green_%281892-1960%29_in_1956.png" alt="Flowers in Chania" width="460" height="345">
+<div></div>
+<br>
+<p>-Continuing the spirit of inclusivity and empowerment, this website promotes minority businesses. It also provides a space for users to share and discuss their experiences at these various places, fostering a sense of community and shared experiences.</p>
+
+<br>
+<br>
+<h4>Upcoming updates -comments, image uploads, and personalized homepages.</h4>
+<nav aria-label="Page navigation example">
+    <ul class="pagination d-flex justify-content-center">
+
+        {% if posts_of_the_page.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ posts_of_the_page.previous_page_number }}">Previous</a></li>
+      {% endif %}
+      {% if posts_of_the_page.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ posts_of_the_page.next_page_number }}">Next</a></li>
+        {% endif %}
+    </ul>
+  </nav>
+{% endblock %}

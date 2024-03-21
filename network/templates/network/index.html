@@ -129,6 +129,10 @@ function submitHandler(id){
 
         <textarea name="content" row="4" cols="100"></textarea>
     </br>
+    <div class="form-group">
+      <label for="imageurl">Image URL</label>
+      <input type="text" name="imageurl" class="form-control" id="imageurl"  placeholder="Image URL">
+    </div>
         <input type="submit" value="Post" class="btn btn-primary"/>
 
 
@@ -144,7 +148,7 @@ function submitHandler(id){
     box-sizing: border-box;"> 
         <h5 class="username" >@{{ post.user }}</h5>
         
-      
+        <img src="{{post.imageUrl}}" alt="testing" height="400px" width="200px">
        <h6 class="content" id="content_{{post.id}}" >{{ post.content }}</h6>
        
         <p class="date"> {{ post.date }}</p>
