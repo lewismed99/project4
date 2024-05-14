@@ -80,6 +80,10 @@ function getCookie(name){
           liked= !liked
         }
 
+function submitComment(postId) {
+        // Add your logic here for submitting comments
+        console.log("Submitting comment for post with ID: " + postId);
+}
 /*
 function submitHandler(id){
 
@@ -157,26 +161,22 @@ function submitHandler(id){
         <p class="comment">{{ comment.message }}</p>
         <a class="nav-link" href="{% url 'profile' user_id=post.user.id  %}"><strong>personal page</strong></a>
       
-
-          <h2>comments</h2>
+        <h2>Comments</h2>
 
         </br>
-        {% if user.is_authenticated %} 
-        
+        {% if user.is_authenticated %}
+          
           <form action="{% url 'addComment' id=post.id %}" method="POST" ></form>  
            {% csrf_token %}
             <div class="form-group">
-              <label for="price">Add comment</label>
-              <input type="text"  name="newComment"   placeholder="Add new comment">
-              <button type="submit" class="btn btn-warning">Add </button>
-
-           
-
-
+              <label for="newComment">Add comment</label>
+              <input type="text"  name="newComment" id="newCommentInput_{{ post.id }}" placeholder="Add new comment">
+              <button type="button" class="btn btn-warning" onclick="submitComment({{ post.id }})">Add </button>
             </div>
-            
           
           </form>
+      
+
         {% endif %}
           
           

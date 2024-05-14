@@ -190,19 +190,27 @@ def register(request):
     else:
         return render(request, "network/register.html")
 
+def addComment(request, id):
+    currentUser = request.user
+    postData = Post.objects.get(pk=id)
+    message = request.POST.get('newComment')
 
-def addComment(request,id):
-    currentUser=request.user
-    postData=Post.objects.get(pk=id)
-    message=request.POST['newComment'],
-
-
-
-    newComment= comment(
-        author=currentUser,
-        listing=postData,
-        message=message
-    )
+    newComment = comment(author=currentUser, post=postData, message=message)
     newComment.save()
-    return HttpResponseRedirect(reverse(index))
-    #return HttpResponseRedirect(reverse("index",args=(id, )))
+
+    return HttpResponseRedirect(reverse('index'))
+# def addComment(request,id):
+#     currentUser=request.user
+#     postData=Post.objects.get(pk=id)
+#     message=request.POST['newComment'],
+
+
+
+#     newComment= comment(
+#         author=currentUser,
+#         listing=postData,
+#         message=message
+#     )
+#     newComment.save()
+#     return HttpResponseRedirect(reverse(index))
+#     #return HttpResponseRedirect(reverse("index",args=(id, )))
