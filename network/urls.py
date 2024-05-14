@@ -17,4 +17,6 @@ urlpatterns = [
      path('edit/<int:post_id>',views.edit,name='edit'),
      path('remove_like/<int:post_id>',views.remove_like,name='edit'),
      path('add_like/<int:post_id>',views.add_like,name='edit'),
+     path('addComment/<int:id>',views.addComment,name='addComment'),
+
 ]

@@ -33,3 +33,13 @@ class Like(models.Model):
     def __str__(self):
         return f"{self.user} liked {self.post}"
     
+
+class comment (models.Model):
+    author=models.ForeignKey(User,on_delete=models.CASCADE,related_name="userComment")
+    post=models.ForeignKey(Post, on_delete=models.CASCADE, blank=True, null=True, related_name="postComment")
+    message=models.CharField(max_length=200)
+    
+
+    def __str__(self):
+        return f"{self.author} comment on {self.post}"
+      

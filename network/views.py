@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator
 import json
 from django.http import JsonResponse
-from .models import User, Post, Follow, Like
+from .models import User, Post, Follow, Like, comment
 
 def remove_like(request, post_id):
     post=Post.objects.get(pk=post_id)
@@ -189,3 +189,20 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+
+
+def addComment(request,id):
+    currentUser=request.user
+    postData=Post.objects.get(pk=id)
+    message=request.POST['newComment'],
+
+
+
+    newComment= comment(
+        author=currentUser,
+        listing=postData,
+        message=message
+    )
+    newComment.save()
+    return HttpResponseRedirect(reverse(index))
+    #return HttpResponseRedirect(reverse("index",args=(id, )))
