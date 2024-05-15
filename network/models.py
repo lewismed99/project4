@@ -42,4 +42,10 @@ class comment (models.Model):
 
     def __str__(self):
         return f"{self.author} comment on {self.post}"
-      
+class Category(models.Model):
+    
+    categoryName=models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.categoryName
+    

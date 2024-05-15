@@ -190,15 +190,34 @@ def register(request):
     else:
         return render(request, "network/register.html")
 
-def addComment(request, id):
-    currentUser = request.user
-    postData = Post.objects.get(pk=id)
-    message = request.POST.get('newComment')
+def addComment(request, post_id):
+    if request.method=="POST":
+        #data=json.loads(request.body)
+        user=User.objects.get(pk=request.user.id)# this is ensure we have the user makingthe comment
+        #currentUser = request.user
+        postData = Post.objects.get(pk=id)
+        message = request.POST.get('newComment')
+        
 
-    newComment = comment(author=currentUser, post=postData, message=message)
-    newComment.save()
+        newComment = comment(author=user, post=postData, message=message)
+        newComment.save()
 
-    return HttpResponseRedirect(reverse('index'))
+        return JsonResponse({'message': 'change successful', 'data': data['message']})
+    
+
+def displayCategory(request):
+    if request.method=="POST":
+        categoryFromForm=request.POST['category']
+        category=Category.objects.get(categoryName=categoryFromForm)
+
+        activeListings=Listings.objects.filter(isActive=True, category=category)
+        allCategories=Category.objects.all()
+        return render(request, "auctions/index.html",{
+        "listings":activeListings,
+        "categories":allCategories,
+        })
+
+    #return HttpResponseRedirect(reverse('index'))
 # def addComment(request,id):
 #     currentUser=request.user
 #     postData=Post.objects.get(pk=id)

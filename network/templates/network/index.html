@@ -80,10 +80,42 @@ function getCookie(name){
           liked= !liked
         }
 
-function submitComment(postId) {
-        // Add your logic here for submitting comments
-        console.log("Submitting comment for post with ID: " + postId);
+        <!-- Add this JavaScript function at the end of the script section in index.html -->
+
+  function submitComment(id) {
+    const message = document.getElementById(`newCommentInput_${id}`).value;
+
+    fetch(`/edit/${id}`, {
+                method: "POST",
+                headers: {"Content-type": "application/json", "X-CSRFToken": getCookie("csrftoken")},
+                body: JSON.stringify({
+                    message: textareaValue
+                })
+            })
+
+    /*fetch(`/addComment/${id}`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken")
+        },
+        body: JSON.stringify({ comment: newComment })
+    })*/
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(result => {
+        // Handle the response data
+        message.innerHTML=result.data
+        console.log(result);
+    })
+    .catch(error => console.error('Error:', error));
 }
+
+
 /*
 function submitHandler(id){
 
@@ -166,7 +198,7 @@ function submitHandler(id){
         </br>
         {% if user.is_authenticated %}
           
-          <form action="{% url 'addComment' id=post.id %}" method="POST" ></form>  
+          <form action="{% url 'addComment' id=post.id %}" method="POST" >  
            {% csrf_token %}
             <div class="form-group">
               <label for="newComment">Add comment</label>
