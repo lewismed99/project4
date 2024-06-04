@@ -72,7 +72,8 @@ function getCookie(name){
             })
           }else{
             fetch(`/add_like/${id}`)
-            .then(response=> response.json)
+               path('addComment/<int:post_id>',views.addComment,name='addComment'),
+then(response=> response.json)
             .then(result =>{
               btn.classList.add('fa-thumbs-down')
             })
@@ -152,6 +153,21 @@ function submitHandler(id){
 
 */
 
+function commentHandeler(id){
+  const textareaValue=document.getElementById(`textarea_${id}`).value
+  fetch(`/addComment/${id}`, {
+                method: "POST",
+                headers: {"Content-type": "application/json", "X-CSRFToken": getCookie("csrftoken")},
+                body: JSON.stringify({
+                    content: textareaValue
+                })
+              })
+              .then(response => response.json())
+              .then(result=>
+              console.log(result))
+
+}
+
 </script>
 <h1>All POSTS</h1>
 
@@ -190,25 +206,48 @@ function submitHandler(id){
        <h6 class="content" id="content_{{post.id}}" >{{ post.content }}</h6>
        
         <p class="date"> {{ post.date }}</p>
-        <p class="comment">{{ comment.message }}</p>
+        
         <a class="nav-link" href="{% url 'profile' user_id=post.user.id  %}"><strong>personal page</strong></a>
       
         <h2>Comments</h2>
 
+        <h6 class="comment" id="comment_{{post.id}}" >{{ post.comment }}</h6>
+        <p class="comment">{{ post.comment }}</p>
         </br>
         {% if user.is_authenticated %}
-          
-          <form action="{% url 'addComment' id=post.id %}" method="POST" >  
+        {% if user != post.user %}
+          <div class="d-flex justify-content-around">
+
+            <button class="btn btn-default" data-toggle="modal" data-target="#modal_add_comment_{{ post.id }}">Add Comment</button>
+          </div>
            {% csrf_token %}
             <div class="form-group">
               <label for="newComment">Add comment</label>
               <input type="text"  name="newComment" id="newCommentInput_{{ post.id }}" placeholder="Add new comment">
-              <button type="button" class="btn btn-warning" onclick="submitComment({{ post.id }})">Add </button>
+              <button type="button" class="btn btn-warning" onclick="commentHandeler({{ post.id }})">Add comment</button>
             </div>
+          <div class="modal" id="modal_add_comment_{{ post.id }}" tabindex="-1" role="dialog" aria-labelledby="modal_add_comment_{{ post.id }}_label">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+        <textarea rows="5" id="textarea_{{ post.id }}" class="form-control" name="comment"> </textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="commentHandeler({{ post.id }})">add messeges</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
           
-          </form>
-      
-
+        {% endif %}
         {% endif %}
           
           
@@ -231,7 +270,7 @@ function submitHandler(id){
                 </div>
                 <div class="modal-body">
 
-                  <textarea rows="5" id="textarea_{{ post.id }}" class="form-control" name="content">{{ post.content }}</textarea>
+                  <textarea rows="5" id="textarea_{{ post.id }}" class="form-control" name="content">{{ post.comment }}</textarea>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-primary" onclick= "submitHandler({{ post.id }})">Save changes</button>

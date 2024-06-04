@@ -190,28 +190,33 @@ def register(request):
     else:
         return render(request, "network/register.html")
 
-def addComment(request, post_id):
-    if request.method=="POST":
+def addComment(request,post_id):
+    if request.method=="POST":#this checvks if we are recioeving a post method
         #data=json.loads(request.body)
-        user=User.objects.get(pk=request.user.id)# this is ensure we have the user makingthe comment
+        data=json.loads(request.body)#this will help us get the data from our jasvascript
+        addCommentPost= Post.objects.get(pk=post_id)
+        #(User.objects.get(pk=request.user.id)# this is ensure we have the user makingthe comment
         #currentUser = request.user
-        postData = Post.objects.get(pk=id)
-        message = request.POST.get('newComment')
+        addCommentPost.comment=data["comment"]
+        addCommentPost.save()
+        return JsonResponse({"messeage":"change successful", "data" :['comment']})
+       # postData = Post.objects.get(pk=id)
+        #message = request.POST.get('newComment')
         
 
-        newComment = comment(author=user, post=postData, message=message)
-        newComment.save()
+        #newComment = comment(author=user, post=postData, message=message)
+        #newComment.save()
 
-        return JsonResponse({'message': 'change successful', 'data': data['message']})
+       # return JsonResponse({'message': 'change successful', 'data': data['message']})
     
 
 def displayCategory(request):
     if request.method=="POST":
         categoryFromForm=request.POST['category']
-        category=Category.objects.get(categoryName=categoryFromForm)
+        category=category.objects.get(categoryName=categoryFromForm)
 
         activeListings=Listings.objects.filter(isActive=True, category=category)
-        allCategories=Category.objects.all()
+        allCategories=category.objects.all()
         return render(request, "auctions/index.html",{
         "listings":activeListings,
         "categories":allCategories,

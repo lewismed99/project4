@@ -13,7 +13,7 @@ class Post(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name="author")
     imageUrl=models.CharField(max_length=1000,null=True)
     date=models.DateTimeField(auto_now_add=True) 
-    
+    comment=models.CharField(max_length=140, default="feedback")
     
     def __str__(self):
         return f"post {self.id} made by {self.user} on {self.date.strftime('%d %b %Y %H:%M:%S')}"
